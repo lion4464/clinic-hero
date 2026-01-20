@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/clinic
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+server:
+  port: 9090
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+app:
+  jwt:
+    secret: "this-is-a-very-long-secret-key-32chars+"
+    access-token-minutes: 30
