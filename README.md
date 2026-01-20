@@ -15,7 +15,7 @@ This starter shows:
 Create database:
 
 ```sql
-CREATE DATABASE securitydemo;
+CREATE DATABASE clinic;
 ```
 
 Update `src/main/resources/application.yml` with your Postgres user/password.
@@ -58,6 +58,6 @@ Response:
 
 ### Test protected endpoints
 - `GET /me` (any authenticated user)
-- `GET /admin/metrics` (requires `PERM_ADMIN_METRICS`)
-- `POST /admin/users` (requires `PERM_USER_WRITE`)
+- `GET /admin/metrics` (requires `ADMIN_METRICS`)
+- `POST /admin/users` (requires `USER_WRITE`)
 

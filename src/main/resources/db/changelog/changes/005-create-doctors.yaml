@@ -1,0 +1,77 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-doctors
+      author: oripov
+      changes:
+        - createTable:
+            tableName: doctors
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: full_name
+                  type: VARCHAR(120)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: speciality
+                  type: VARCHAR(80)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_by
+                  type: VARCHAR(100)
+
+              - column:
+                  name: updated_by
+                  type: VARCHAR(100)
+
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+
+        - createIndex:
+            tableName: doctors
+            indexName: idx_doctors_is_deleted
+            columns:
+              - column: { name: is_deleted }
+
+        - createIndex:
+            tableName: doctors
+            indexName: idx_doctors_type
+            columns:
+              - column: { name: type }
+
+      rollback:
+        - dropTable:
+            tableName: doctors
