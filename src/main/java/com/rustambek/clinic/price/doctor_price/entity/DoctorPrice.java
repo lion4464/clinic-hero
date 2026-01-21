@@ -25,9 +25,6 @@ public class DoctorPrice extends BaseEntity {
     @Column(name = "price",nullable = false)
     private Long price;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private ActiveType type;
