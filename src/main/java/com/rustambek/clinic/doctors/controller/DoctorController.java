@@ -23,6 +23,7 @@ public class DoctorController {
         return service.create(req);
     }
 
+
     @GetMapping("/{id}")
     public DoctorDto get(@PathVariable UUID id) {
         return service.getById(id);
