@@ -2,6 +2,7 @@ package com.rustambek.clinic.doctors.entity;
 
 import com.rustambek.clinic.doctors.enums.ActiveType;
 import com.rustambek.clinic.generic.BaseEntity;
+import com.rustambek.clinic.price.doctor_price.entity.DoctorPrice;
 import lombok.*;
 import jakarta.persistence.*;
 
