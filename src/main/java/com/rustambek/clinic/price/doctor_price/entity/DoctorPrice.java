@@ -1,5 +1,6 @@
 package com.rustambek.clinic.price.doctor_price.entity;
 
+import com.rustambek.clinic.doctors.enums.ActiveType;
 import com.rustambek.clinic.generic.BaseEntity;
 import com.rustambek.clinic.visit.enums.VisitType;
 import jakarta.persistence.*;
@@ -23,5 +24,12 @@ public class DoctorPrice extends BaseEntity {
 
     @Column(name = "price",nullable = false)
     private Long price;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private ActiveType type;
 
 }
