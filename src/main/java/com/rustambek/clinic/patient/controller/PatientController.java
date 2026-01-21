@@ -35,7 +35,7 @@ public class PatientController {
         service.delete(id);
     }
 
-     @GetMapping
+     @GetMapping("/pageable")
     public Page<PatientDto> pageable(
             @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String city,

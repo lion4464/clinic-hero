@@ -38,7 +38,7 @@ public class DoctorController {
         service.delete(id);
     }
 
-    @GetMapping("pageable")
+    @GetMapping("/pageable")
     public Page<DoctorDto> pageable(
             @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String speciality,
