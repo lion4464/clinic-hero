@@ -9,3 +9,7 @@ databaseChangeLog:
       file: db/changelog/changes/004-create-users.yaml
   - include:
       file: db/changelog/changes/005-create-doctors.yaml
+  - include:
+      file: db/changelog/changes/006-create-examination.yaml
+  - include:
+      file: db/changelog/changes/007-alter-table-visits.yaml

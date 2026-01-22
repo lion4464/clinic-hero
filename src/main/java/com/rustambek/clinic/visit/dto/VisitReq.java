@@ -21,6 +21,6 @@ public class VisitReq {
     private LocalDateTime visitDateTime;
     private VisitType visitType;
     private VisitStatus status;
-    private UUID primaryDoctor;
+    private UUID primaryDoctorId;
     private String note;
 }

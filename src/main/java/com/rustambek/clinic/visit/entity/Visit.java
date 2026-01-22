@@ -27,6 +27,9 @@ public class Visit extends BaseEntity{
     @JoinColumn(name = "patient_id", nullable = false, updatable = false,insertable = false)
     private Patient patient;
 
+    @Column(name = "patient_id")
+    private Long patientId;
+
     @Column(name = "visit_date_time", nullable = false)
     private LocalDateTime visitDateTime;
 

@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-create-examination.yaml
+      author: oripov
+      changes:
+        - createTable:
+            tableName: examinations
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_examination
+                    nullable: false
+
+              - column:
+                  name: visit_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: doctor_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: complaint
+                  type: VARCHAR(500)
+
+              - column:
+                  name: diagnosis
+                  type: VARCHAR(500)
+
+              - column:
+                  name: comment
+                  type: VARCHAR(500)
+
+        # Optional indexes (recommended for FK columns)
+        - createIndex:
+            tableName: examinations
+            indexName: idx_examination_visit_id
+            columns:
+              - column:
+                  name: visit_id
+
+        - createIndex:
+            tableName: examinations
+            indexName: idx_examination_doctor_id
+            columns:
+              - column:
+                  name: doctor_id
+
+        # Foreign keys
+        - addForeignKeyConstraint:
+            baseTableName: examinations
+            baseColumnNames: visit_id
+            constraintName: fk_examination_visit
+            referencedTableName: visits
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: examinations
+            baseColumnNames: doctor_id
+            constraintName: fk_examination_doctor
+            referencedTableName: doctors
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
