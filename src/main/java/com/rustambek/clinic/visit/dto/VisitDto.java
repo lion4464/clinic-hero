@@ -6,15 +6,13 @@ import com.rustambek.clinic.patient.dto.PatientDto;
 import com.rustambek.clinic.patient.entity.Patient;
 import com.rustambek.clinic.visit.enums.VisitStatus;
 import com.rustambek.clinic.visit.enums.VisitType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class VisitDto {
     private Long id;

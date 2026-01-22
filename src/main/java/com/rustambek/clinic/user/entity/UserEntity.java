@@ -3,15 +3,14 @@ package com.rustambek.clinic.user.entity;
 import com.rustambek.clinic.generic.BaseEntity;
 import com.rustambek.clinic.user.model.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
