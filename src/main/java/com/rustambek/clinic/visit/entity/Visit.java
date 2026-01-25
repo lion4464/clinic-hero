@@ -3,6 +3,7 @@ package com.rustambek.clinic.visit.entity;
 import com.rustambek.clinic.doctors.entity.Doctor;
 import com.rustambek.clinic.generic.BaseEntity;
 import com.rustambek.clinic.patient.entity.Patient;
+import com.rustambek.clinic.visit.dto.VisitReq;
 import com.rustambek.clinic.visit.enums.VisitStatus;
 import com.rustambek.clinic.visit.enums.VisitType;
 import jakarta.persistence.*;
@@ -39,7 +40,7 @@ public class Visit extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 30)
-    private VisitStatus status;
+    private VisitStatus status = VisitStatus.OPEN;
 
     @Column(name = "primary_doctor_id")
     private UUID primaryDoctorId;
@@ -51,4 +52,12 @@ public class Visit extends BaseEntity{
 
     @Column(name = "note", length = 500)
     private String note;
+
+    public static Visit builds(Long patientId,VisitType visitType) {
+        return Visit.builder()
+                .patientId(patientId)
+                .visitType(visitType)
+                .status(VisitStatus.OPEN).build();
+    }
+
 }

@@ -10,7 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class OrderReq {
-    private Long visitId;
+    private Long visitId;  //TODO agar visitId yo'q bo'lsa u holda ukol sistema olgani kelgan bo'ladi,Lekin patientId berilishi SHART
+    private Long patientId;
     private UUID createdByDoctorId;
     private OrderType orderType;
     private OrderStatus status;

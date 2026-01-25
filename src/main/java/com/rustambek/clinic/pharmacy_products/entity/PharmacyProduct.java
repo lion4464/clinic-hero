@@ -6,6 +6,8 @@ import com.rustambek.clinic.visit.enums.VisitStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "pharmacy_product")
 @Getter
@@ -28,10 +30,16 @@ public class PharmacyProduct extends BaseEntity {
     @Column(name = "quantity",nullable = false)
     private Integer quantity;
 
-    @Column(name = "income_price",nullable = false)
+    @Column(name = "last_income_price",nullable = false)
     private Long incomePrice;
 
-    @Column(name = "sale_price",nullable = false)
+    @Column(name = "last_sale_price",nullable = false)
     private Long salePrice;
+
+    @Column(name = "last_come_date_time", nullable = false)
+    private LocalDateTime lastDateTime;
+
+
+
 
 }

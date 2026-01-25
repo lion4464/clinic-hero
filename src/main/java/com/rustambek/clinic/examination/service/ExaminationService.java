@@ -1,8 +1,10 @@
 package com.rustambek.clinic.examination.service;
+import com.rustambek.clinic.billing.invoice.service.InvoiceService;
 import com.rustambek.clinic.convertor.mapstruct.ExaminationMapper;
 import com.rustambek.clinic.examination.dto.ExaminationDto;
 import com.rustambek.clinic.examination.dto.ExaminationReq;
 import com.rustambek.clinic.examination.entity.Examination;
+import com.rustambek.clinic.examination.model.Status;
 import com.rustambek.clinic.examination.repository.ExaminationRepository;
 import com.rustambek.clinic.exception.DataNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static com.rustambek.clinic.specification.ExaminationSpecifications.byFilter;
@@ -23,10 +27,15 @@ public class ExaminationService {
 
     private final ExaminationRepository repository;
     private final ExaminationMapper mapper;
+    private final InvoiceService invoiceService;
 
     public ExaminationDto create(ExaminationReq req) {
         Examination entity = mapper.toEntity(req);
-        return mapper.toDto(repository.save(entity));
+        entity.setStatus(Status.OPEN);
+        Examination save = repository.saveAndFlush(entity);
+        List<Examination> examinations = List.of(save);
+        invoiceService.createInvoiceWithInvoiceItemsForExaminations(req.getVisitId(),examinations);
+        return mapper.toDto(save);
     }
 
     @Transactional(readOnly = true)
@@ -56,6 +65,11 @@ public class ExaminationService {
     @Transactional(readOnly = true)
     public Page<ExaminationDto> pageable(Long visitId, UUID doctorId, Pageable pageable) {
         return mapper.toDtoPage(repository.findAll(byFilter(visitId, doctorId), pageable));
+    }
+
+
+    public List<Examination> getAllModelByVisitIdAndStatusNotPaid(Long visitId) {
+        return repository.findAllByVisitIdAndStatus(visitId, Status.OPEN);
     }
 }
 

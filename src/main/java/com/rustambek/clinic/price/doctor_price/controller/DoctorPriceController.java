@@ -18,7 +18,7 @@ import java.util.UUID;
 public class DoctorPriceController {
 
     private final DoctorPriceService service;
-
+    @PostMapping("")
     public DoctorPriceDto create(@RequestBody DoctorPriceReq req) {
         return service.create(req);
     }

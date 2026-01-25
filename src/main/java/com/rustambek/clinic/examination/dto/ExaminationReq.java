@@ -2,6 +2,7 @@ package com.rustambek.clinic.examination.dto;
 
 import com.rustambek.clinic.doctors.dto.DoctorDto;
 import com.rustambek.clinic.visit.dto.VisitDto;
+import com.rustambek.clinic.visit.enums.VisitType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class ExaminationReq {
     private Long visitId;
     private UUID doctorId;
+    private VisitType visitType;
     private String complaint;
     private String diagnosis;
     private String comment;

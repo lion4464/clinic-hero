@@ -8,6 +8,6 @@ import com.rustambek.clinic.price.doctor_price.entity.DoctorPrice;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", config = GlobalMapperConfig.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",uses = {DoctorMapper.class}, config = GlobalMapperConfig.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorPriceMapper extends GenericMapper<DoctorPrice, DoctorPriceDto, DoctorPriceReq> {
 }

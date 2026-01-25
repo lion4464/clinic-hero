@@ -5,6 +5,7 @@ import com.rustambek.clinic.doctors.dto.DoctorDto;
 import com.rustambek.clinic.doctors.dto.DoctorReq;
 import com.rustambek.clinic.doctors.entity.Doctor;
 import com.rustambek.clinic.doctors.enums.ActiveType;
+import com.rustambek.clinic.doctors.projections.DoctorWithNowPrice;
 import com.rustambek.clinic.doctors.repository.DoctorRepository;
 import com.rustambek.clinic.exception.DataNotFoundException;
 import com.rustambek.clinic.specification.DoctorSpecifications;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.rustambek.clinic.specification.DoctorSpecifications.*;
@@ -64,6 +67,12 @@ public class DoctorService {
     public Page<DoctorDto> pageable(String fullName, String speciality, ActiveType type, Pageable pageable) {
         Specification<Doctor> spec =  DoctorSpecifications.byFilter(fullName, speciality, type);
         return mapper.toDtoPage(repository.findAll(spec, pageable));
+    }
+
+
+    public List<DoctorWithNowPrice> findDoctorsWithLatestPrice(Set<UUID> doctorIds) {
+        UUID[] doctorIdArray = doctorIds.toArray(new UUID[0]);
+        return repository.findDoctorsWithLatestPrice(doctorIdArray);
     }
 }
 
