@@ -1,10 +1,13 @@
 package com.rustambek.clinic.price.doctor_price.entity;
 
+import com.rustambek.clinic.doctors.entity.Doctor;
 import com.rustambek.clinic.doctors.enums.ActiveType;
 import com.rustambek.clinic.generic.BaseEntity;
 import com.rustambek.clinic.visit.enums.VisitType;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "doctor_price")
@@ -25,8 +28,12 @@ public class DoctorPrice extends BaseEntity {
     @Column(name = "price",nullable = false)
     private Long price;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private ActiveType type;
+    @Column(name = "doctor_id")
+    private UUID doctorId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "doctor_id", nullable = false, updatable = false,insertable = false)
+    private Doctor doctor;
+
 
 }

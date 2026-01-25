@@ -8,5 +8,4 @@ public class ClinicApplication {
     public static void main(String[] args) {
         SpringApplication.run(ClinicApplication.class, args);
     }
-//    bu commit push qilinmasligi kerak
 }

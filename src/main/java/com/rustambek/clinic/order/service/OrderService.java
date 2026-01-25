@@ -7,6 +7,11 @@ import com.rustambek.clinic.order.entity.Order;
 import com.rustambek.clinic.order.model.OrderStatus;
 import com.rustambek.clinic.order.model.OrderType;
 import com.rustambek.clinic.order.repository.OrderRepository;
+import com.rustambek.clinic.visit.dto.VisitReq;
+import com.rustambek.clinic.visit.entity.Visit;
+import com.rustambek.clinic.visit.enums.VisitType;
+import com.rustambek.clinic.visit.repository.VisitRepository;
+import com.rustambek.clinic.visit.service.VisitService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,8 +30,14 @@ public class OrderService {
 
     private final OrderRepository repository;
     private final OrderMapper mapper;
-
+    private final VisitRepository visitRepository;
+@Transactional
     public OrderDto create(OrderReq req) {
+        Visit visitIfUseServiceOnly = null;
+        if (req.getVisitId() == null) {
+            visitIfUseServiceOnly = visitRepository.save(Visit.builds(req.getPatientId(), VisitType.SERVICE_ONLY));
+            req.setVisitId(visitIfUseServiceOnly.getId());
+        }
         Order entity = mapper.toEntity(req);
         return mapper.toDto(repository.save(entity));
     }

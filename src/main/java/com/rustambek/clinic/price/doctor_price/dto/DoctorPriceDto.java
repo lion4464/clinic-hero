@@ -1,5 +1,6 @@
 package com.rustambek.clinic.price.doctor_price.dto;
 
+import com.rustambek.clinic.doctors.dto.DoctorDto;
 import com.rustambek.clinic.doctors.enums.ActiveType;
 import com.rustambek.clinic.visit.enums.VisitType;
 import lombok.AllArgsConstructor;
@@ -12,8 +13,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorPriceDto {
-    private UUID id;
+    private Long id;
     private VisitType visitType;
     private Long price;
-    private ActiveType type;
+    private DoctorDto doctor;
 }

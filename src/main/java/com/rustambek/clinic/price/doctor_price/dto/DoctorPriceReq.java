@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +16,5 @@ import lombok.NoArgsConstructor;
 public class DoctorPriceReq {
     private VisitType visitType;
     private Long price;
-    private ActiveType type;
+    private UUID doctorId;
 }

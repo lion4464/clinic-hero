@@ -29,11 +29,15 @@ public class Examination extends BaseEntity {
     @Column(name = "visit_id")
     private Long visitId;
 
-//
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "status", nullable = false, length = 30)
-//    private Status status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 30)
+    private Status status = Status.OPEN;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "visit_type", nullable = false, length = 30)
+    private VisitType visitType;
 
     @Column(name = "doctor_id")
     private UUID doctorId;

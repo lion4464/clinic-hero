@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <!-- Auto-generated from: migrations_no_enums_and_readable_constraints.sql -->
+    <changeSet id="001-create-schema" author="Oripov">
+        <sql splitStatements="true" stripComments="true">
+            <![CDATA[
+            create table doctor_price (
+                                          id bigserial not null,
+                                          created_at timestamp(6),
+                                          created_by varchar(100),
+                                          is_deleted boolean not null,
+                                          updated_at timestamp(6),
+                                          updated_by varchar(100),
+                                          doctor_id uuid,
+                                          price bigint not null,
+                                          visit_type varchar(30) not null,
+                                          primary key (id)
+            );
+
+            create table doctors (
+                                     id uuid not null,
+                                     created_at timestamp(6),
+                                     created_by varchar(100),
+                                     is_deleted boolean not null,
+                                     updated_at timestamp(6),
+                                     updated_by varchar(100),
+                                     full_name varchar(120) not null,
+                                     speciality varchar(80) not null,
+                                     type varchar(20) not null,
+                                     primary key (id)
+            );
+
+            create table examinations (
+                                          id bigserial not null,
+                                          created_at timestamp(6),
+                                          created_by varchar(100),
+                                          is_deleted boolean not null,
+                                          updated_at timestamp(6),
+                                          updated_by varchar(100),
+                                          comment varchar(500),
+                                          complaint varchar(500),
+                                          diagnosis varchar(500),
+                                          doctor_id uuid,
+                                          status varchar(30) not null,
+                                          visit_id bigint,
+                                          visit_type varchar(30) not null,
+                                          primary key (id)
+            );
+
+            create table invoice_items (
+                                           id bigserial not null,
+                                           created_at timestamp(6),
+                                           created_by varchar(100),
+                                           is_deleted boolean not null,
+                                           updated_at timestamp(6),
+                                           updated_by varchar(100),
+                                           invoice_id bigint not null,
+                                           quantity integer not null,
+                                           ref_id bigint not null,
+                                           type varchar(30) not null,
+                                           unit_price bigint not null,
+                                           unit_total_amount bigint not null,
+                                           primary key (id)
+            );
+
+            create table invoices (
+                                      id bigserial not null,
+                                      created_at timestamp(6),
+                                      created_by varchar(100),
+                                      is_deleted boolean not null,
+                                      updated_at timestamp(6),
+                                      updated_by varchar(100),
+                                      discount integer,
+                                      patient_id bigint,
+                                      status varchar(30) not null,
+                                      total_amount bigint,
+                                      visit_id bigint not null,
+                                      primary key (id)
+            );
+
+            create table med_service_price (
+                                               id bigserial not null,
+                                               created_at timestamp(6),
+                                               created_by varchar(100),
+                                               is_deleted boolean not null,
+                                               updated_at timestamp(6),
+                                               updated_by varchar(100),
+                                               name varchar(255) not null,
+                                               price bigint not null,
+                                               primary key (id)
+            );
+
+            create table med_services (
+                                          id bigserial not null,
+                                          created_at timestamp(6),
+                                          created_by varchar(100),
+                                          is_deleted boolean not null,
+                                          updated_at timestamp(6),
+                                          updated_by varchar(100),
+                                          med_service_price_id bigint not null,
+                                          nurse_med_id bigint not null,
+                                          quantity integer not null,
+                                          visit_id bigint not null,
+                                          primary key (id)
+            );
+
+            create table nurse_medications (
+                                               id bigserial not null,
+                                               created_at timestamp(6),
+                                               created_by varchar(100),
+                                               is_deleted boolean not null,
+                                               updated_at timestamp(6),
+                                               updated_by varchar(100),
+                                               only_service boolean not null,
+                                               order_id bigint,
+                                               visit_id bigint not null,
+                                               primary key (id)
+            );
+
+            create table orders (
+                                    id bigserial not null,
+                                    created_at timestamp(6),
+                                    created_by varchar(100),
+                                    is_deleted boolean not null,
+                                    updated_at timestamp(6),
+                                    updated_by varchar(100),
+                                    created_by_doctor_id uuid,
+                                    note varchar(500),
+                                    order_type varchar(30) not null,
+                                    performed_by_id uuid,
+                                    result_short varchar(500),
+                                    scheduled_at timestamp(6),
+                                    status varchar(20) not null,
+                                    visit_id bigint not null,
+                                    primary key (id)
+            );
+
+            create table patients (
+                                      id bigserial not null,
+                                      created_at timestamp(6),
+                                      created_by varchar(100),
+                                      is_deleted boolean not null,
+                                      updated_at timestamp(6),
+                                      updated_by varchar(100),
+                                      age integer,
+                                      city varchar(120),
+                                      full_name varchar(200) not null,
+                                      phone varchar(30),
+                                      region varchar(120),
+                                      primary key (id)
+            );
+
+            create table pharmacy_product (
+                                              id bigserial not null,
+                                              created_at timestamp(6),
+                                              created_by varchar(100),
+                                              is_deleted boolean not null,
+                                              updated_at timestamp(6),
+                                              updated_by varchar(100),
+                                              last_income_price bigint not null,
+                                              last_come_date_time timestamp(6) not null,
+                                              name varchar(200) not null,
+                                              quantity integer not null,
+                                              last_sale_price bigint not null,
+                                              unit varchar(30) not null,
+                                              primary key (id)
+            );
+
+            create table pharmacy_product_income (
+                                                     id bigserial not null,
+                                                     created_at timestamp(6),
+                                                     created_by varchar(100),
+                                                     is_deleted boolean not null,
+                                                     updated_at timestamp(6),
+                                                     updated_by varchar(100),
+                                                     income_price bigint not null,
+                                                     pharmacy_id bigint,
+                                                     quantity integer not null,
+                                                     sale_price bigint not null,
+                                                     primary key (id)
+            );
+
+            create table pharmacy_product_outcome (
+                                                      id bigserial not null,
+                                                      created_at timestamp(6),
+                                                      created_by varchar(100),
+                                                      is_deleted boolean not null,
+                                                      updated_at timestamp(6),
+                                                      updated_by varchar(100),
+                                                      income_price bigint not null,
+                                                      nurse_medication_id bigint not null,
+                                                      pharmacy_id bigint,
+                                                      quantity integer not null,
+                                                      sale_price bigint not null,
+                                                      visit_id bigint not null,
+                                                      primary key (id)
+            );
+
+            create table users (
+                                   id uuid not null,
+                                   created_at timestamp(6),
+                                   created_by varchar(100),
+                                   is_deleted boolean not null,
+                                   updated_at timestamp(6),
+                                   updated_by varchar(100),
+                                   email varchar(120) not null,
+                                   password_hash varchar(255) not null,
+                                   role varchar(20) not null,
+                                   username varchar(64) not null,
+                                   primary key (id)
+            );
+
+            create table visits (
+                                    id bigserial not null,
+                                    created_at timestamp(6),
+                                    created_by varchar(100),
+                                    is_deleted boolean not null,
+                                    updated_at timestamp(6),
+                                    updated_by varchar(100),
+                                    note varchar(500),
+                                    patient_id bigint,
+                                    primary_doctor_id uuid,
+                                    status varchar(30) not null,
+                                    visit_date_time timestamp(6) not null,
+                                    visit_type varchar(30) not null,
+                                    primary key (id)
+            );
+
+            alter table if exists doctor_price
+                add constraint fk_doctor_price__doctor_id__doctors
+                foreign key (doctor_id)
+                references doctors;
+
+            alter table if exists examinations
+                add constraint fk_examinations__doctor_id__doctors
+                foreign key (doctor_id)
+                references doctors;
+
+            alter table if exists examinations
+                add constraint fk_examinations__visit_id__visits
+                foreign key (visit_id)
+                references visits;
+
+            alter table if exists invoice_items
+                add constraint fk_invoice_items__invoice_id__invoices
+                foreign key (invoice_id)
+                references invoices;
+
+            alter table if exists invoices
+                add constraint fk_invoices__patient_id__patients
+                foreign key (patient_id)
+                references patients;
+
+            alter table if exists invoices
+                add constraint fk_invoices__visit_id__visits
+                foreign key (visit_id)
+                references visits;
+
+            alter table if exists med_services
+                add constraint fk_med_services__med_service_price_id__med_service_price
+                foreign key (med_service_price_id)
+                references med_service_price;
+
+            alter table if exists med_services
+                add constraint fk_med_services__nurse_med_id__nurse_medications
+                foreign key (nurse_med_id)
+                references nurse_medications;
+
+            alter table if exists med_services
+                add constraint fk_med_services__visit_id__visits
+                foreign key (visit_id)
+                references visits;
+
+            alter table if exists nurse_medications
+                add constraint fk_nurse_medications__order_id__orders
+                foreign key (order_id)
+                references orders;
+
+            alter table if exists nurse_medications
+                add constraint fk_nurse_medications__visit_id__visits
+                foreign key (visit_id)
+                references visits;
+
+            alter table if exists orders
+                add constraint fk_orders__created_by_doctor_id__doctors
+                foreign key (created_by_doctor_id)
+                references doctors;
+
+            alter table if exists orders
+                add constraint fk_orders__performed_by_id__doctors
+                foreign key (performed_by_id)
+                references doctors;
+
+            alter table if exists orders
+                add constraint fk_orders__visit_id__visits
+                foreign key (visit_id)
+                references visits;
+
+            alter table if exists pharmacy_product_income
+                add constraint fk_pharmacy_product_income__pharmacy_id__pharmacy_product
+                foreign key (pharmacy_id)
+                references pharmacy_product;
+
+            alter table if exists pharmacy_product_outcome
+                add constraint fk_pharmacy_product_outcome__nurse_medication_id__nurse_medications
+                foreign key (nurse_medication_id)
+                references nurse_medications;
+
+            alter table if exists pharmacy_product_outcome
+                add constraint fk_pharmacy_product_outcome__pharmacy_id__pharmacy_product
+                foreign key (pharmacy_id)
+                references pharmacy_product;
+
+            alter table if exists pharmacy_product_outcome
+                add constraint fk_pharmacy_product_outcome__visit_id__visits
+                foreign key (visit_id)
+                references visits;
+
+            alter table if exists visits
+                add constraint fk_visits__patient_id__patients
+                foreign key (patient_id)
+                references patients;
+
+            alter table if exists visits
+                add constraint fk_visits__primary_doctor_id__doctors
+                foreign key (primary_doctor_id)
+                references doctors;
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

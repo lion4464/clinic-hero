@@ -2,6 +2,7 @@ package com.rustambek.clinic.visit.dto;
 
 import com.rustambek.clinic.doctors.dto.DoctorDto;
 import com.rustambek.clinic.patient.dto.PatientDto;
+import com.rustambek.clinic.visit.entity.Visit;
 import com.rustambek.clinic.visit.enums.VisitStatus;
 import com.rustambek.clinic.visit.enums.VisitType;
 import lombok.AllArgsConstructor;

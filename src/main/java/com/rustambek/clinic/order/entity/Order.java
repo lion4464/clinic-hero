@@ -31,10 +31,10 @@ public class Order extends BaseEntity {
     private Long visitId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "created_by_doctor_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "created_by_doctor_id", insertable = false, updatable = false)
     private Doctor createdByDoctor;
 
-    @Column(name = "created_by_doctor_id", nullable = false)
+    @Column(name = "created_by_doctor_id")
     private UUID createdByDoctorId;
 
     @Enumerated(EnumType.STRING)
