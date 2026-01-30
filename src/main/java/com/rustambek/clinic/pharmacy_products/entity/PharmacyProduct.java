@@ -39,6 +39,9 @@ public class PharmacyProduct extends BaseEntity {
     @Column(name = "last_come_date_time", nullable = false)
     private LocalDateTime lastDateTime;
 
+    @Column(name = "due_to_date_time", nullable = false)
+    private LocalDateTime dueToDateTime;
+
 
 
 
