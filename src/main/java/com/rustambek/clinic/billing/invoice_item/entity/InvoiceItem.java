@@ -41,5 +41,8 @@ public class InvoiceItem extends BaseEntity {
     @Column(name = "unit_total_amount", nullable = false)
     private Long unitTotalAmount;
 
+    @Column(name = "name",nullable = false)
+    private String name;
+
 
 }
