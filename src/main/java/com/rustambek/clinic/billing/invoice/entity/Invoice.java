@@ -1,11 +1,15 @@
 package com.rustambek.clinic.billing.invoice.entity;
 
 import com.rustambek.clinic.billing.invoice.model.InvoiceStatus;
+import com.rustambek.clinic.billing.invoice_item.entity.InvoiceItem;
 import com.rustambek.clinic.generic.BaseEntity;
 import com.rustambek.clinic.patient.entity.Patient;
 import com.rustambek.clinic.visit.entity.Visit;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "invoices")
@@ -43,6 +47,10 @@ public class Invoice extends BaseEntity {
 
     @Column(name = "discount")
     private Integer discount;
+
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<InvoiceItem> items = new ArrayList<>();
 
 
 

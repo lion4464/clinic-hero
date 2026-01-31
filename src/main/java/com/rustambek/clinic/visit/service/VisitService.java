@@ -71,4 +71,8 @@ public class VisitService {
     ) {
         return mapper.toDtoPage(repository.findAll(byFilter(patientId, primaryDoctorId, visitType, status, from, to), pageable));
     }
+
+    public void markAsPaid(Visit visit) {
+         repository.save(visit);
+    }
 }

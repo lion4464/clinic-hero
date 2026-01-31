@@ -1,5 +1,7 @@
 package com.rustambek.clinic.user.controller;
 
+import com.rustambek.clinic.billing.invoice.dto.InvoiceDto;
+import com.rustambek.clinic.billing.invoice.model.InvoiceStatus;
 import com.rustambek.clinic.security.AppUserDetails;
 import com.rustambek.clinic.user.dto.UserCreateRequest;
 import com.rustambek.clinic.user.dto.UserDetailDto;
@@ -8,6 +10,8 @@ import com.rustambek.clinic.user.model.Role;
 import com.rustambek.clinic.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -40,5 +44,13 @@ public class UserController {
     @PreAuthorize("hasAuthority('USER_WRITE')")
     public UserDto createUser(@Valid @RequestBody UserCreateRequest req) {
         return userService.createUser(req, Role.USER);
+    }
+
+    @GetMapping("/pageable")
+    public Page<UserDto> pageable(
+            @RequestParam(required = false) Role role,
+            Pageable pageable
+    ) {
+        return userService.pageable(role, pageable);
     }
 }
