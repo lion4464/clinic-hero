@@ -8,7 +8,6 @@ import com.rustambek.clinic.pharmacy_products.entity.PharmacyProductIncome;
 import com.rustambek.clinic.pharmacy_products.model.UnitType;
 import com.rustambek.clinic.pharmacy_products.repository.PharmacyProductIncomeRepository;
 import com.rustambek.clinic.pharmacy_products.repository.PharmacyProductRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -82,5 +81,9 @@ public class PharmacyProductService {
 
     public void saveOrUpdateAllModel(List<PharmacyProduct> pharmacyProducts) {
         repository.saveAll(pharmacyProducts);
+    }
+
+    public Long countByDeleteFalse(LocalDateTime from, LocalDateTime to) {
+        return repository.countAllByIsDeletedIsFalseAndCreatedAtBetween(from, to);
     }
 }

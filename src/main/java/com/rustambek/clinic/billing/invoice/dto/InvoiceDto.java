@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceDto {
+    private Long id;
     private VisitDto visit;
     private InvoiceStatus status;
     private Long totalAmount;

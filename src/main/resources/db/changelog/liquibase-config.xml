@@ -8,6 +8,9 @@
 
     <include file="db/changelog/logs/001-all-tables-and-Fk-created.xml" relativeToChangelogFile="false"/>
     <include file="db/changelog/logs/002-invoice_item-table-add.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/logs/003-due_to_date_time-add-to-pharmacy-product.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/logs/004-alter-table-med-service-price-table.xml" relativeToChangelogFile="false"/>
+    <include file="db/changelog/logs/005-outcomes-tables-create.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
 

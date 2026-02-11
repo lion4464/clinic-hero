@@ -2,6 +2,7 @@ package com.rustambek.clinic.price.med_service_type.service;
 
 import com.rustambek.clinic.convertor.mapstruct.MedServicePriceMapper;
 import com.rustambek.clinic.exception.DataNotFoundException;
+import com.rustambek.clinic.price.med_service_type.MedServiceTypeEnum;
 import com.rustambek.clinic.price.med_service_type.dto.MedServicePriceDto;
 import com.rustambek.clinic.price.med_service_type.dto.MedServicePriceReq;
 import com.rustambek.clinic.price.med_service_type.entity.MedServiceTypes;
@@ -56,8 +57,8 @@ public class MedServiceTypeService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MedServicePriceDto> search(String name, Pageable pageable) {
-        return mapper.toDtoPage(repository.findAll(byFilter(name), pageable));
+    public Page<MedServicePriceDto> search(String name, MedServiceTypeEnum type, Pageable pageable) {
+        return mapper.toDtoPage(repository.findAll(byFilter(name,type), pageable));
     }
 
     public List<MedServiceTypes> findAllByIds(Set<Long> ids) {

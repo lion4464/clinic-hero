@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <!-- 001: outcome_types -->
+    <changeSet id="001-create-table-outcome-types" author="Oripov">
+        <sql splitStatements="true" stripComments="true">
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS outcome_types (
+                id           BIGSERIAL PRIMARY KEY,
+                name         VARCHAR(255) NOT NULL
+            );
+            ]]>
+        </sql>
+    </changeSet>
+
+    <!-- 002: outcomes -->
+    <changeSet id="002-create-table-outcomes" author="Oripov">
+        <sql splitStatements="true" stripComments="true">
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS outcomes (
+                id               BIGSERIAL PRIMARY KEY,
+                outcome_type_id  BIGINT NOT NULL,
+                amount           BIGINT NOT NULL,
+                CONSTRAINT fk_outcomes_outcome_type
+                    FOREIGN KEY (outcome_type_id)
+                    REFERENCES outcome_types (id)
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_outcomes_outcome_type_id
+                ON outcomes(outcome_type_id);
+            ]]>
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

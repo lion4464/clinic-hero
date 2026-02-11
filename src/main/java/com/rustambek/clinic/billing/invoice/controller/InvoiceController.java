@@ -23,11 +23,16 @@ public class InvoiceController {
             @RequestParam(required = false) Long visitId,
             @RequestParam(required = false) InvoiceStatus status,
             @RequestParam(required = false) Long patientId,
+            @RequestParam(required = false) String createdAtFrom,
+            @RequestParam(required = false) String createdAtToDate,
             Pageable pageable
     ) {
-        return invoiceService.pageable(visitId,status,patientId, pageable);
+        return invoiceService.pageable(visitId,status,patientId,createdAtFrom,createdAtToDate, pageable);
     }
-
+    @GetMapping("/{id}")
+    public InvoiceDto get(@PathVariable("id") Long id) {
+        return invoiceService.get(id);
+    }
     @PutMapping("/mark_as_paid/{id}")
     public InvoiceDto markAsPaid(@PathVariable Long id) {
         return invoiceService.markAspaid(id);

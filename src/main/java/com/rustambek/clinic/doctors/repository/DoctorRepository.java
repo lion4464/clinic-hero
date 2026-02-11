@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -30,5 +31,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID>, JpaSpecif
     """, nativeQuery = true)
     List<DoctorWithNowPrice> findDoctorsWithLatestPrice(@Param("doctorIds") UUID[] doctorIds);
 
+    Long countAllByIsDeletedIsFalseAndCreatedAtBetween(LocalDateTime from, LocalDateTime to );
 }
 

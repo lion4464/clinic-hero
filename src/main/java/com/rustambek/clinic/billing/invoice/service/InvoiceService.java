@@ -8,7 +8,6 @@ import com.rustambek.clinic.billing.invoice_item.entity.InvoiceItem;
 import com.rustambek.clinic.billing.invoice_item.model.ItemType;
 import com.rustambek.clinic.billing.invoice_item.repository.InvoiceItemRepository;
 import com.rustambek.clinic.convertor.mapstruct.InvoiceMapper;
-import com.rustambek.clinic.doctors.dto.DoctorDto;
 import com.rustambek.clinic.doctors.projections.DoctorWithNowPrice;
 import com.rustambek.clinic.doctors.service.DoctorService;
 import com.rustambek.clinic.examination.entity.Examination;
@@ -25,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,7 +69,8 @@ public class InvoiceService {
             if (medServiceWithLatestPrice.getMedServiceTypes()==null)
                 throw new DataNotFoundException("Med service price not found name="+medServiceWithLatestPrice.getMedServiceTypes().getName());
 
-            InvoiceItem model = InvoiceItem.builder().name(medServiceWithLatestPrice.getMedServiceTypes().getName()).invoiceId(invoice.getId()).type(ItemType.SERVICE).refId(medServiceWithLatestPrice.getId()).unitPrice(medServiceWithLatestPrice.getMedServiceTypes().getPrice()).unitTotalAmount(medServiceWithLatestPrice.getMedServiceTypes().getPrice()).quantity(medServiceWithLatestPrice.getQuantity()).build();
+            InvoiceItem model = InvoiceItem.builder().name(medServiceWithLatestPrice.getMedServiceTypes().getName()).invoiceId(invoice.getId()).refId(medServiceWithLatestPrice.getId()).unitPrice(medServiceWithLatestPrice.getMedServiceTypes().getPrice()).unitTotalAmount(medServiceWithLatestPrice.getMedServiceTypes().getPrice()).quantity(medServiceWithLatestPrice.getQuantity())
+                    .type((medServiceWithLatestPrice.getMedServiceTypes().getType().name().equals("ANALYSE") ? ItemType.ANALYSE :  ItemType.SERVICE)).build();
             totalAmount += medServiceWithLatestPrice.getMedServiceTypes().getPrice();
             invoiceItems.add(model);
         }
@@ -95,8 +96,8 @@ public class InvoiceService {
         return invoiceRepository.save(invoice);
     }
 
-    public Page<InvoiceDto> pageable(Long visitId, InvoiceStatus status, Long patientId, Pageable pageable) {
-        return invoiceMapper.toDtoPage(invoiceRepository.findAll(InvoiceSpecification.byFilter(visitId,patientId,status),pageable));
+    public Page<InvoiceDto> pageable(Long visitId, InvoiceStatus status, Long patientId, String createdAtFrom, String createdAtToDate, Pageable pageable) {
+        return invoiceMapper.toDtoPage(invoiceRepository.findAll(InvoiceSpecification.byFilter(visitId,patientId,status,createdAtFrom,createdAtToDate),pageable));
     }
     @Transactional
     public InvoiceDto markAspaid(Long id) {
@@ -111,5 +112,16 @@ public class InvoiceService {
 
     private Invoice getModel(Long id) {
         return invoiceRepository.findById(id).orElseThrow(() ->new DataNotFoundException("Invoice not found with id="+id));
+    }
+
+
+    public Long totalSumInvoiceAmountLatestYear(LocalDateTime from, LocalDateTime to) {
+
+        return invoiceRepository.sumTotalAmountFrom(from,to);
+    }
+
+    public InvoiceDto get(Long id) {
+        Invoice invoice = invoiceRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Invoice not found with id=" + id));
+        return invoiceMapper.toDto(invoice);
     }
 }
