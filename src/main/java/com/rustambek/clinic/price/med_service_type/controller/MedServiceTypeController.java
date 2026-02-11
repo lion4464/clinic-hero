@@ -1,5 +1,6 @@
 package com.rustambek.clinic.price.med_service_type.controller;
 
+import com.rustambek.clinic.price.med_service_type.MedServiceTypeEnum;
 import com.rustambek.clinic.price.med_service_type.dto.MedServicePriceDto;
 import com.rustambek.clinic.price.med_service_type.dto.MedServicePriceReq;
 import com.rustambek.clinic.price.med_service_type.service.MedServiceTypeService;
@@ -38,9 +39,10 @@ public class MedServiceTypeController {
     @GetMapping("/pageable")
     public Page<MedServicePriceDto> search(
             @RequestParam(required = false) String name,
+            @RequestParam(required = false) MedServiceTypeEnum type,
             Pageable pageable
     ) {
-        return service.search(name, pageable);
+        return service.search(name,type, pageable);
     }
 }
 

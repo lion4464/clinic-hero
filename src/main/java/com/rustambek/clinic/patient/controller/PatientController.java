@@ -1,11 +1,14 @@
 package com.rustambek.clinic.patient.controller;
 
 import com.rustambek.clinic.patient.dto.PatientDto;
+import com.rustambek.clinic.patient.dto.PatientMinDto;
 import com.rustambek.clinic.patient.dto.PatientReq;
 import com.rustambek.clinic.patient.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,12 +39,14 @@ public class PatientController {
     }
 
      @GetMapping("/pageable")
-    public Page<PatientDto> pageable(
+    public Page<PatientMinDto> pageable(
             @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String region,
-            Pageable pageable
+            @RequestParam(required = false) String createdAtFrom,
+            @RequestParam(required = false) String createdAtToDate,
+            @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC)  Pageable pageable
     ) {
-        return service.pageable(fullName, city, region, pageable);
+        return service.pageable(fullName, city, region,createdAtFrom,createdAtToDate, pageable);
     }
 }

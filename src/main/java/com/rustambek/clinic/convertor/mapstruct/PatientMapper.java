@@ -9,6 +9,6 @@ import com.rustambek.clinic.patient.entity.Patient;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",  config = GlobalMapperConfig.class,unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",uses = {VisitMinMapper.class}, config = GlobalMapperConfig.class,unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PatientMapper extends GenericMapper<Patient,PatientDto, PatientReq> {
 }

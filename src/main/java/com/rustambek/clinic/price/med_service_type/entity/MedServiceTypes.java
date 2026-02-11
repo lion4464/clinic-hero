@@ -1,6 +1,7 @@
 package com.rustambek.clinic.price.med_service_type.entity;
 
 import com.rustambek.clinic.generic.BaseEntity;
+import com.rustambek.clinic.price.med_service_type.MedServiceTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,10 @@ public class MedServiceTypes extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private MedServiceTypeEnum type;
 
     @Column(name = "price",nullable = false)
     private Long price;

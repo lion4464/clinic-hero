@@ -12,17 +12,15 @@ import com.rustambek.clinic.specification.DoctorSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import static com.rustambek.clinic.specification.DoctorSpecifications.*;
 
 
 @Service
@@ -73,6 +71,10 @@ public class DoctorService {
     public List<DoctorWithNowPrice> findDoctorsWithLatestPrice(Set<UUID> doctorIds) {
         UUID[] doctorIdArray = doctorIds.toArray(new UUID[0]);
         return repository.findDoctorsWithLatestPrice(doctorIdArray);
+    }
+
+    public Long countByDeleteFalse(LocalDateTime from, LocalDateTime to) {
+        return repository.countAllByIsDeletedIsFalseAndCreatedAtBetween(from, to);
     }
 }
 
